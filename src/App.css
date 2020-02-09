@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Kelly+Slab|Source+Sans+Pro:300,400,600|Roboto+Condensed:300,400,700&display=swap');
+
+:root {
+  --color-orange: hsl(34, 26%, 90%);
+  --color-grey: hsl(213, 30%, 60%);
+  --color-grey-light: hsl(213, 30%, 92%);
+  --color-green: hsl(90, 28%, 90%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+	line-height: 1.4em;
+  font-weight: 300;
+}
+
+:focus {
+	outline: 0;
+}
+
+.container {
+  max-width: 700px;
+  min-width: 270px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.header {
+  padding: 50px 0;
+  text-align: center;
+  font-family: 'Kelly Slab', sans-serif;
+  font-size: 36px;
+  letter-spacing: 0.2em;
+  color: var(--color-grey);
+}
+
+.messages-box {
+  position: relative;
+  border: 1px solid var(--color-grey);
+  border-radius: 4px;
+  min-height: 400px;
+  height: 60vh;
+  overflow: scroll;
+}
+
+.messages-box__message-box {
+  background-color: var(--color-grey-light);
+  border-radius: 5px;
+  margin: 10px 150px 10px 30px;
+  padding: 10px 15px;
+}
+
+.messages-box__message-box--me {
+  background-color: var(--color-green);
+  text-align: right;
+  margin: 10px 30px 10px 150px;
+}
+
+.messages-box__name {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-grey);
+}
+
+.messages-box__message {
+  color: var(--color-grey);
+}
+
+.message-new {
+  position: relative;
+}
+
+.message-new__input {
+  width: 100%;
+  line-height: 2.5;
+  font-size: 14px;
+  color: var(--color-grey);
+  padding-left: 5px;
+  padding-right: 65px;
+}
+
+.message-new__button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 3px;
+}
+
+.footer {
+  color: var(--color-grey);
+  font-size: 16px;
+  margin: 80px;
+  text-align: center;
+}

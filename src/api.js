@@ -6,6 +6,10 @@ function subscribeToTimer(interval, cb) {
   socket.emit('subscribeToTimer', interval);
 }
 
+function authenticateUser(user) {
+  socket.emit('authenticateUser', user);
+}
+
 function subscribeToNewMessages(cb) {
   socket.on('newMessage', message => cb(message));
 }
@@ -14,4 +18,4 @@ function sendMessage(message) {
   socket.emit('sendMessage', message);
 }
 
-export { subscribeToTimer, subscribeToNewMessages, sendMessage };
+export { subscribeToTimer, subscribeToNewMessages, authenticateUser, sendMessage };
