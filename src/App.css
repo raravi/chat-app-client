@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700,900|Kelly+Slab|Source+Sans+Pro:300,400,600|Roboto+Condensed:300,400,700&display=swap');
 
 :root {
-  --color-orange: hsl(22, 77%, 65%);
   --color-grey: hsl(213, 30%, 60%);
   --color-grey-lighter: hsl(213, 30%, 72%);
+  --color-grey-lighter2: hsl(213, 30%, 82%);
   --color-grey-light: hsl(213, 30%, 92%);
-  --color-green: hsl(90, 28%, 90%);
-  --color-background: hsl(51, 84%, 93%);
+  --color-blue: hsl(190, 70%, 85%);
+  --color-blue-dark: hsl(190, 70%, 63%);
+  --color-blue-grey: hsl(208, 23%, 33%);
+  --color-blue-grey-light: hsl(208, 23%, 40%);
+  --color-georgia-peach: hsl(0, 95%, 71%);
+  --color-background: hsl(0, 0%, 94%);
   --color-login: hsl(51, 84%, 98%);
-  --color-input: hsl(16, 59%, 49%);
-  --color-input-header: hsl(213, 30%, 55%);
-  --color-input-submit: hsl(16, 59%, 52%);
 }
 
 * {
@@ -21,9 +22,15 @@
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
 	line-height: 1.4em;
   font-weight: 300;
   background-color: var(--color-background);
+  /* background: url("bg1.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
 }
 
 :focus {
@@ -40,35 +47,83 @@ body {
 .header {
   padding: 50px 0;
   text-align: center;
+  color: var(--color-blue-dark);
+  border-bottom: 2px solid var(--color-grey-light);
+}
+
+.header--loggedin {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__title {
+  padding-left: 40px;
   font-family: 'Kelly Slab', sans-serif;
-  font-size: 36px;
+  font-size: 52px;
   letter-spacing: 0.2em;
-  color: var(--color-orange);
   -webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
 }
 
+.header__logout {
+  display: none;
+}
+
+.header__logout--loggedin {
+  display: block;
+  margin-right: 20px;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+  color: var(--color-grey-lighter);
+  cursor: pointer;
+}
+
+.header__logout--loggedin:hover {
+  color: var(--color-grey);
+}
+
 .messages-box {
   position: relative;
-  border: 1px solid var(--color-grey);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   min-height: 400px;
   height: 60vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  margin: 3px 0 6px;
+}
+
+.messages-box::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.messages-box::-webkit-scrollbar-track {
+    background: var(--color-grey-lighter2);
+    border: 4px solid transparent;
+    background-clip: content-box;   /* THIS IS IMPORTANT */
+}
+
+/* Handle */
+.messages-box::-webkit-scrollbar-thumb {
+    background: var(--color-grey-lighter2);
+    border: 1px solid var(--color-background);
 }
 
 .messages-box__message-box {
-  background-color: var(--color-grey-light);
-  border-radius: 5px;
+  background-color: var(--color-login);
   margin: 10px 150px 10px 30px;
-  padding: 10px 15px;
+  padding: 15px 25px;
+  border-radius: 30px;
 }
 
 .messages-box__message-box--me {
-  background-color: var(--color-green);
+  background-color: var(--color-blue);
   text-align: right;
   margin: 10px 30px 10px 150px;
+}
+
+.messages-box__message-box.messages-box__message-box--me .messages-box__name{
+  display: none;
 }
 
 .messages-box__name {
@@ -76,11 +131,13 @@ body {
   font-size: 16px;
   font-weight: 400;
   letter-spacing: 0.05em;
-  color: var(--color-grey);
+  padding-bottom:6px;
+  color: var(--color-blue-grey-light);
 }
 
 .messages-box__message {
-  color: var(--color-grey);
+  letter-spacing: 0.03em;
+  color: var(--color-blue-grey-light);
 }
 
 .message-new {
@@ -89,11 +146,16 @@ body {
 
 .message-new__input {
   width: 100%;
-  line-height: 2.5;
+  line-height: 3;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 14px;
-  color: var(--color-grey);
-  padding-left: 5px;
-  padding-right: 65px;
+  letter-spacing: 0.04em;
+  color: var(--color-blue-grey-light);
+  background-color: var(--color-login);
+  padding-left: 10px;
+  padding-right: 60px;
+  border: none;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
 }
 
 .message-new__button {
@@ -103,10 +165,45 @@ body {
   bottom: 0;
   padding: 8px;
   font-size: 14px;
+  border: none;
   border-radius: 3px;
+  border-color: var(--color-blue-dark);
+  background-color: var(--color-blue-dark);
+  color: var(--color-login);
 }
 
-.login {
+.message-new__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.message-new__input::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.message-new__input:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.message-new__input::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.message-new__input::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.login,
+.register {
   position: relative;
   width: 100%;
   max-width: 350px;
@@ -114,17 +211,19 @@ body {
   padding: 0;
 }
 
-.login__header-group {
+.login__header-group,
+.register__header-group {
   display: flex;
   justify-content: center;
 }
 
-.login__header {
+.login__header,
+.register__header {
   font-family: 'Titillium Web', sans-serif;
   font-size: 28px;
   font-weight: 300;
   letter-spacing: 0.04em;
-  color: var(--color-input-header);
+  color: var(--color-blue-grey);
   text-align: center;
   padding: 40px 0 10px;
   margin: 0 15px 20px;
@@ -132,31 +231,67 @@ body {
   cursor: pointer;
 }
 
-.login__header--selected {
-  border-bottom: 4px solid var(--color-orange);
+.login__header--selected,
+.register__header--selected {
+  border-bottom: 4px solid var(--color-blue-dark);
   font-weight: 600;
   cursor: auto;
 }
 
-.login__email, .login__password {
+.login__email,
+.login__password,
+.register__username,
+.register__email,
+.register__password,
+.register__password2 {
   font-size: 16px;
   line-height: 1.75;
   margin-top: 46px;
   padding: 0 8px;
   width: 100%;
   border: none;
-  border-bottom: 1px solid var(--color-input);
+  border-bottom: 2px solid var(--color-blue-dark);
   color: var(--color-grey);
   background-color: var(--color-background);
 }
 
-.login__email-error, .login__password-error {
+.login__email-error,
+.login__password-error,
+.register__username-error,
+.register__email-error,
+.register__password-error,
+.register__password2-error {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1.75;
   width: 100%;
-  color: var(--color-input);
+  color: var(--color-georgia-peach);
+}
+
+.login__submit,
+.register__submit {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  padding: 12px 45px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  border-radius: 25px;
+  border-color: var(--color-blue-dark);
+  background-color: var(--color-blue-dark);
+  color: var(--color-login);
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+              0 10px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.login__submit:hover,
+.register__submit:hover {
+  transform: translate(-50%, -1%);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
+              0 4px 8px 0 rgba(0, 0, 0, 0.25);
 }
 
 .login__email::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -217,88 +352,6 @@ body {
 	font-style: italic;
 	font-weight: 300;
 	color: var(--color-grey-lighter);
-}
-
-.login__submit {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  padding: 12px 45px;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  border-radius: 25px;
-  border-color: var(--color-input-submit);
-  background-color: var(--color-input-submit);
-  color: var(--color-login);
-  cursor: pointer;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-              0 10px 20px 0 rgba(0, 0, 0, 0.2);
-}
-
-.login__submit:hover {
-  transform: translate(-50%, -1%);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
-              0 4px 8px 0 rgba(0, 0, 0, 0.25);
-}
-
-.register {
-  position: relative;
-  width: 100%;
-  max-width: 350px;
-  margin: 20px auto 0;
-  padding: 0;
-}
-
-.register__header-group {
-  display: flex;
-  justify-content: center;
-}
-
-.register__header {
-  font-family: 'Titillium Web', sans-serif;
-  font-size: 28px;
-  font-weight: 300;
-  letter-spacing: 0.04em;
-  color: var(--color-input-header);
-  text-align: center;
-  padding: 40px 0 10px;
-  margin: 0 15px 20px;
-  border-bottom: 4px solid var(--color-background);
-  cursor: pointer;
-}
-
-.register__header--selected {
-  border-bottom: 4px solid var(--color-orange);
-  font-weight: 600;
-  cursor: auto;
-}
-
-.register__username,
-.register__email,
-.register__password,
-.register__password2 {
-  font-size: 16px;
-  line-height: 1.75;
-  margin-top: 46px;
-  padding: 0 8px;
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid var(--color-input);
-  color: var(--color-grey);
-  background-color: var(--color-background);
-}
-
-.register__username-error,
-.register__email-error,
-.register__password-error,
-.register__password2-error {
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1.75;
-  width: 100%;
-  color: var(--color-input);
 }
 
 .register__username::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -421,29 +474,6 @@ body {
 	color: var(--color-grey-lighter);
 }
 
-.register__submit {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  padding: 12px 45px;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  border-radius: 25px;
-  border-color: var(--color-input-submit);
-  background-color: var(--color-input-submit);
-  color: var(--color-login);
-  cursor: pointer;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1),
-              0 10px 20px 0 rgba(0, 0, 0, 0.2);
-}
-
-.register__submit:hover {
-  transform: translate(-50%, -1%);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
-              0 4px 8px 0 rgba(0, 0, 0, 0.25);
-}
-
 .footer {
   color: var(--color-grey);
   font-size: 16px;
@@ -453,5 +483,78 @@ body {
 }
 
 .footer a:visited {
-  color: var(--color-input);
+  color: var(--color-blue-dark);
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    padding: 40px 0;
+  }
+  .header__title {
+    padding-left: 20px;
+  }
+  .messages-box__message-box {
+    margin: 10px 100px 10px 30px;
+  }
+
+  .messages-box__message-box--me {
+    margin: 10px 30px 10px 100px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    padding: 30px 0;
+  }
+  .header__title {
+    font-size: 40px;
+  }
+  .header__logout--loggedin {
+    font-size: 20px;
+  }
+  .messages-box__message-box {
+    margin: 10px 100px 10px 20px;
+  }
+
+  .messages-box__message-box--me {
+    margin: 10px 20px 10px 100px;
+  }
+  .login__header, .register__header {
+    font-size: 24px;
+    padding: 30px 0 10px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .messages-box__message-box {
+    margin: 10px 70px 10px 20px;
+  }
+
+  .messages-box__message-box--me {
+    margin: 10px 20px 10px 70px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header {
+    padding: 20px 0;
+  }
+  .header__title {
+    padding-left: 10px;
+    font-size: 28px;
+  }
+  .header__logout--loggedin {
+    font-size: 18px;
+  }
+  .messages-box__message-box {
+    margin: 10px 40px 10px 10px;
+  }
+
+  .messages-box__message-box--me {
+    margin: 10px 10px 10px 40px;
+  }
+  .login__header, .register__header {
+    font-size: 18px;
+    padding: 30px 0 4px;
+  }
 }

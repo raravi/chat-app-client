@@ -1,9 +1,16 @@
 import React from 'react';
 
-export const Header = () => {
+export const Header = (props) => {
   return (
-    <header className="header">
-      <h1>texter</h1>
+    <header className={props.userAuthenticated
+                    ? "header header--loggedin"
+                    : "header"}>
+      <h1 className="header__title">texter</h1>
+      <h3 className={props.userAuthenticated
+                      ? "header__logout header__logout--loggedin"
+                      : "header__logout"}
+          onClick={props.logout}
+      >logout</h3>
     </header>
   )
 }

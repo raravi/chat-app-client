@@ -18,6 +18,10 @@ function connectSocket(setUserAuthenticated) {
   });
 }
 
+function disconnectSocket() {
+  socket.disconnect();
+}
+
 function authenticateUser(user) {
   socket.emit('authenticateUser', user);
 }
@@ -34,4 +38,4 @@ function sendMessage(message) {
   socket.emit('sendMessage', message);
 }
 
-export { connectSocket, subscribeToNewMessages, getOldMessages, authenticateUser, sendMessage };
+export { connectSocket, disconnectSocket, subscribeToNewMessages, getOldMessages, authenticateUser, sendMessage };

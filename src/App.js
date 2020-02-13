@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import {  connectSocket,
+          disconnectSocket,
           subscribeToNewMessages,
           authenticateUser,
           getOldMessages,
@@ -59,6 +60,10 @@ function App() {
     if (e.key === "Enter") {
       getMessageFromUser();
     }
+  }
+
+  function logout() {
+    disconnectSocket();
   }
 
   function toggleNewUser() {
@@ -153,7 +158,7 @@ function App() {
 
   return (
     <div className="container">
-      <Header />
+      <Header userAuthenticated={userAuthenticated} logout={logout} />
       { userAuthenticated &&
         <MessageSection
           messageBoxText={messageBoxText}
