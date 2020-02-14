@@ -25,6 +25,7 @@ function App() {
   let [ registerEmailError, setRegisterEmailError ] = useState('');
   let [ registerPasswordError, setRegisterPasswordError ] = useState('');
   let [ registerPassword2Error, setRegisterPassword2Error ] = useState('');
+  let [ registerSuccess, setRegisterSuccess ] = useState('');
   let [ forgotPasswordEmailError, setForgotPasswordEmailError ] = useState('');
   let [ forgotPasswordEmailSuccess, setForgotPasswordEmailSuccess ] = useState('');
   let [ newUser, setNewUser ] = useState(false);
@@ -93,8 +94,6 @@ function App() {
         subscribeToNewMessages((message) => setNewMessage(message));
         authenticateUser({id: tokenDecoded.id, name: tokenDecoded.name});
         getOldMessages((messages) => {
-          console.log(messages);
-          // TODO: Populate messages in the DOM
           setMessageBoxText(messages.slice());
         });
       }
@@ -102,7 +101,6 @@ function App() {
     .catch(function (error) {
       if (error.response) {
         if (error.response.data) {
-          console.log(error.response.data);
           if (error.response.data.email) {
             setLoginEmailError(error.response.data.email);
           }
@@ -117,7 +115,6 @@ function App() {
   }
 
   function register () {
-    console.log('Clicked Register!');
     var username = document.getElementsByClassName("register__username")[0];
     var email = document.getElementsByClassName("register__email")[0];
     var password = document.getElementsByClassName("register__password")[0];
@@ -127,6 +124,7 @@ function App() {
     setRegisterEmailError('');
     setRegisterPasswordError('');
     setRegisterPassword2Error('');
+    setRegisterSuccess('');
 
     axios.post('http://localhost:8000/api/users/register', {
       name: username.value,
@@ -135,12 +133,11 @@ function App() {
       password2: password2.value
     })
     .then(function (response) {
-      console.log('New user created: ', response.data);
+      setRegisterSuccess(response.data.createduser);
     })
     .catch(function (error) {
       if (error.response) {
         if (error.response.data) {
-          console.log(error.response.data);
           if (error.response.data.name) {
             setRegisterUsernameError(error.response.data.name);
           }
@@ -217,6 +214,7 @@ function App() {
           registerEmailError={registerEmailError}
           registerPasswordError={registerPasswordError}
           registerPassword2Error={registerPassword2Error}
+          registerSuccess={registerSuccess}
           register={register}
         />
       }

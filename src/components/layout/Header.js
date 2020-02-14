@@ -5,7 +5,9 @@ export const Header = (props) => {
     <header className={props.userAuthenticated
                     ? "header header--loggedin"
                     : "header"}>
-      <h1 className="header__title">texter</h1>
+      <h1 className={props.userAuthenticated
+                      ? "header__title header__title--loggedin"
+                      : "header__title"}>texter</h1>
       <h3 className={props.userAuthenticated
                       ? "header__logout header__logout--loggedin"
                       : "header__logout"}

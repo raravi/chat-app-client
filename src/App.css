@@ -58,6 +58,7 @@ body {
 }
 
 .header__title {
+  margin-left: 20px;
   padding-left: 40px;
   font-family: 'Kelly Slab', sans-serif;
   font-size: 52px;
@@ -65,6 +66,16 @@ body {
   -webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-right: 20px;
+  border-radius: 25px;
+  box-shadow: none;
+}
+
+.header__title--loggedin {
+  box-shadow: -11px -11px 22px #b9c4d4,
+             11px 11px 22px #ffffff;
 }
 
 .header__logout {
@@ -78,6 +89,8 @@ body {
   letter-spacing: 0.1em;
   color: var(--color-grey-lighter);
   cursor: pointer;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .header__logout--loggedin:hover {
@@ -115,12 +128,16 @@ body {
   margin: 10px 150px 10px 30px;
   padding: 15px 25px;
   border-radius: 30px;
+  box-shadow: -3px -3px 6px #cdd9eb,
+             6px 6px 12px hsla(183, 100%, 98%, 0.5);
 }
 
 .messages-box__message-box--me {
   background-color: var(--color-blue);
   text-align: right;
   margin: 10px 30px 10px 150px;
+  box-shadow:  3px -3px 6px #cdd9eb,
+               -6px 6px 12px #ffffff;
 }
 
 .messages-box__message-box.messages-box__message-box--me .messages-box__name{
@@ -156,7 +173,10 @@ body {
   padding-left: 10px;
   padding-right: 60px;
   border: none;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05); */
+  box-shadow:  -7px -7px 20px #b9c4d4,
+               7px 7px 20px #ffffff;
+
 }
 
 .message-new__button {
@@ -286,6 +306,7 @@ body {
   color: var(--color-georgia-peach);
 }
 
+.register__success,
 .forgot-password__email-success {
   font-size: 16px;
   font-weight: 500;
