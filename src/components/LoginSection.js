@@ -12,6 +12,9 @@ export const LoginSection = (props) => {
       <input type="password" name="password" className="login__password" placeholder="Password"/>
       <label className="login__password-error">{props.loginPasswordError}</label><br />
       <button type="button" className="login__submit" onClick={props.login}>Submit</button>
+      <div className="login__forgot-passwordblock">
+        <span className="login__forgot-password" onClick={props.onClickForgotPassword}>Forgot Password</span>
+      </div>
     </section>
   )
 }

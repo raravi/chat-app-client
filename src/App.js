@@ -12,6 +12,7 @@ import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
 import { LoginSection } from './components/LoginSection';
 import { RegisterSection } from './components/RegisterSection';
+import { ForgotPassword } from './components/ForgotPassword';
 import './App.css';
 
 function App() {
@@ -24,7 +25,10 @@ function App() {
   let [ registerEmailError, setRegisterEmailError ] = useState('');
   let [ registerPasswordError, setRegisterPasswordError ] = useState('');
   let [ registerPassword2Error, setRegisterPassword2Error ] = useState('');
+  let [ forgotPasswordEmailError, setForgotPasswordEmailError ] = useState('');
+  let [ forgotPasswordEmailSuccess, setForgotPasswordEmailSuccess ] = useState('');
   let [ newUser, setNewUser ] = useState(false);
+  let [ forgotPassword, setForgotPassword ] = useState(false);
 
   useEffect(() => {
     addNewMessageToBox(newMessage);
@@ -156,6 +160,36 @@ function App() {
     });
   }
 
+  function onClickForgotPassword() {
+    setForgotPassword(true);
+  }
+
+  function sendForPasswordReset() {
+    var email = document.getElementsByClassName("forgot-password__email")[0];
+
+    setForgotPasswordEmailError('');
+    setForgotPasswordEmailSuccess('');
+
+    axios.post('http://localhost:8000/api/users/forgotpassword', {
+      email: email.value
+    })
+    .then(function (response) {
+      if (response.data.emailsent)
+        setForgotPasswordEmailSuccess(response.data.emailsent);
+    })
+    .catch(function (error) {
+      if (error.response) {
+        if (error.response.data) {
+          if (error.response.data.email) {
+            setForgotPasswordEmailError(error.response.data.email);
+          }
+        }
+      } else {
+        console.log(error);
+      }
+    });
+  }
+
   return (
     <div className="container">
       <Header userAuthenticated={userAuthenticated} logout={logout} />
@@ -167,15 +201,16 @@ function App() {
           getMessageFromUser={getMessageFromUser}
         />
       }
-      { !userAuthenticated && !newUser &&
+      { !userAuthenticated && !forgotPassword && !newUser &&
         <LoginSection
           toggleNewUser={toggleNewUser}
           loginEmailError={loginEmailError}
           loginPasswordError={loginPasswordError}
           login={login}
+          onClickForgotPassword={onClickForgotPassword}
         />
       }
-      { !userAuthenticated && newUser &&
+      { !userAuthenticated && !forgotPassword && newUser &&
         <RegisterSection
           toggleNewUser={toggleNewUser}
           registerUsernameError={registerUsernameError}
@@ -183,6 +218,13 @@ function App() {
           registerPasswordError={registerPasswordError}
           registerPassword2Error={registerPassword2Error}
           register={register}
+        />
+      }
+      { !userAuthenticated && forgotPassword &&
+        <ForgotPassword
+          forgotPasswordEmailError={forgotPasswordEmailError}
+          forgotPasswordEmailSuccess={forgotPasswordEmailSuccess}
+          sendForPasswordReset={sendForPasswordReset}
         />
       }
       <Footer />

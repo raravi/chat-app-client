@@ -10,6 +10,7 @@
   --color-blue-grey: hsl(208, 23%, 33%);
   --color-blue-grey-light: hsl(208, 23%, 40%);
   --color-georgia-peach: hsl(0, 95%, 71%);
+  --color-green: hsl(167, 36%, 51%);
   --color-background: hsl(0, 0%, 94%);
   --color-login: hsl(51, 84%, 98%);
 }
@@ -203,7 +204,8 @@ body {
 }
 
 .login,
-.register {
+.register,
+.forgot-password {
   position: relative;
   width: 100%;
   max-width: 350px;
@@ -218,7 +220,8 @@ body {
 }
 
 .login__header,
-.register__header {
+.register__header,
+.forgot-password__header {
   font-family: 'Titillium Web', sans-serif;
   font-size: 28px;
   font-weight: 300;
@@ -228,6 +231,10 @@ body {
   padding: 40px 0 10px;
   margin: 0 15px 20px;
   border-bottom: 4px solid var(--color-background);
+}
+
+.login__header,
+.register__header {
   cursor: pointer;
 }
 
@@ -238,12 +245,21 @@ body {
   cursor: auto;
 }
 
+.forgot-password__text {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--color-grey);
+}
+
 .login__email,
 .login__password,
 .register__username,
 .register__email,
 .register__password,
-.register__password2 {
+.register__password2,
+.forgot-password__email {
   font-size: 16px;
   line-height: 1.75;
   margin-top: 46px;
@@ -260,7 +276,8 @@ body {
 .register__username-error,
 .register__email-error,
 .register__password-error,
-.register__password2-error {
+.register__password2-error,
+.forgot-password__email-error {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -269,8 +286,18 @@ body {
   color: var(--color-georgia-peach);
 }
 
+.forgot-password__email-success {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  width: 100%;
+  color: var(--color-green);
+}
+
 .login__submit,
-.register__submit {
+.register__submit,
+.forgot-password__submit {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -288,10 +315,28 @@ body {
 }
 
 .login__submit:hover,
-.register__submit:hover {
+.register__submit:hover,
+.forgot-password__submit:hover {
   transform: translate(-50%, -1%);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
               0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.login__forgot-passwordblock {
+  text-align: center;
+}
+
+.login__forgot-password {
+  font-family: 'Roboto Condensed', sans-serif;
+  /* font-family: 'Source Sans Pro', sans-serif; */
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--color-grey);
+  cursor: pointer;
+}
+
+.login__forgot-password:hover {
+  color: var(--color-blue-grey-light);
 }
 
 .login__email::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -469,6 +514,36 @@ body {
 }
 
 .register__password2::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.forgot-password__email::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.forgot-password__email::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.forgot-password__email:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.forgot-password__email::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.forgot-password__email::placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: var(--color-grey-lighter);
