@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Header component
+ * contains Title text & Logout button.
+ */
 export const Header = (props) => {
   return (
     <header className={props.userAuthenticated

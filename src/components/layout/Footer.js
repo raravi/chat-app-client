@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * Footer component
+ * contains link to github repo.
+ */
 export const Footer = () => {
   return (
     <footer className="footer">

@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * LoginSection component
+ * contains the Login 'page'.
+ */
 export const LoginSection = (props) => {
   return (
     <section className="login">

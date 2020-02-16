@@ -1,5 +1,11 @@
+/**
+ * Import Google Fonts
+ */
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700,900|Kelly+Slab|Source+Sans+Pro:300,400,600|Roboto+Condensed:300,400,700&display=swap');
 
+/**
+ * CSS custom variables to keep the CSS 'DRY'!
+ */
 :root {
   --color-grey: hsl(213, 30%, 60%);
   --color-grey-lighter: hsl(213, 30%, 72%);
@@ -15,6 +21,9 @@
   --color-login: hsl(51, 84%, 98%);
 }
 
+/**
+ * USER RESETS
+ */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,17 +36,15 @@ body {
 	line-height: 1.4em;
   font-weight: 300;
   background-color: var(--color-background);
-  /* background: url("bg1.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; */
 }
 
 :focus {
 	outline: 0;
 }
 
+/**
+ * Container for the page
+ */
 .container {
   max-width: 700px;
   min-width: 270px;
@@ -45,6 +52,9 @@ body {
   padding: 0 10px;
 }
 
+/**
+ * Header section
+ */
 .header {
   padding: 50px 0;
   text-align: center;
@@ -97,15 +107,18 @@ body {
   color: var(--color-grey);
 }
 
+/**
+ * Messages Section
+ */
 .messages-box {
   position: relative;
-  /* border-radius: 4px; */
   min-height: 400px;
   height: 60vh;
   overflow-y: scroll;
   margin: 3px 0 6px;
 }
 
+/* Custom Scrollbar */
 .messages-box::-webkit-scrollbar {
     width: 10px;
 }
@@ -173,7 +186,6 @@ body {
   padding-left: 10px;
   padding-right: 60px;
   border: none;
-  /* box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.05); */
   box-shadow:  -7px -7px 20px #b9c4d4,
                7px 7px 20px #ffffff;
 
@@ -223,6 +235,9 @@ body {
 	color: var(--color-grey-lighter);
 }
 
+/**
+ * Login / Register / Forgot Password Sections
+ */
 .login,
 .register,
 .forgot-password {
@@ -570,6 +585,9 @@ body {
 	color: var(--color-grey-lighter);
 }
 
+/**
+ * Footer section
+ */
 .footer {
   color: var(--color-grey);
   font-size: 16px;
@@ -582,6 +600,10 @@ body {
   color: var(--color-blue-dark);
 }
 
+/**
+ * Responsive Web Design using @media queries.
+ * Breakpoints at 600px, 500px, 400px & 350px
+ */
 @media screen and (max-width: 600px) {
   .header {
     padding: 40px 0;

@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * MessageSection component
+ * contains the logged-in Messages 'page'.
+ */
 export const MessageSection = (props) => {
   return (
     <section className="message-section">

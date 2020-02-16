@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * ForgotPassword component
+ * contains the Forgot Password 'page'.
+ */
 export const ForgotPassword = (props) => {
   return (
     <section className="forgot-password">

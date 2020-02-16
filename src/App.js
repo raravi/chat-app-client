@@ -15,6 +15,11 @@ import { RegisterSection } from './components/RegisterSection';
 import { ForgotPassword } from './components/ForgotPassword';
 import './App.css';
 
+/**
+ * The main App component.
+ * Acts as a Controller (MVC jargon) / Single Source of Truth (React jargon).
+ * Contains all Business logic associated with this app.
+ */
 function App() {
   let [ messageBoxText, setMessageBoxText ] = useState([]);
   let [ newMessage, setNewMessage ] = useState('');
@@ -44,6 +49,19 @@ function App() {
   // eslint-disable-next-line
   }, [messageBoxText]);
 
+  /**
+   * These functions toggle/set state variables.
+   */
+  function toggleNewUser() {
+    setNewUser(!newUser);
+  }
+  function onClickForgotPassword() {
+    setForgotPassword(true);
+  }
+
+  /**
+   * Add New Message (either from the user or someone else) to the Message Box.
+   */
   function addNewMessageToBox(message) {
     if(message) {
       let tempMsges = messageBoxText.slice();
@@ -52,6 +70,11 @@ function App() {
     }
   }
 
+  /**
+   * Get the message from user and
+   * 1. Add it to the message box.
+   * 2. Send to server for broadcast to other users & saving to DB.
+   */
   function getMessageFromUser() {
     var input = document.getElementsByClassName("message-new__input")[0];
     if (input.value !== "") {
@@ -61,20 +84,27 @@ function App() {
     }
   }
 
+  /**
+   * On Enter Key click, send user message to getMessageFromUser()
+   * function defined above.
+   */
   function onEnterKeyClicked(e) {
     if (e.key === "Enter") {
       getMessageFromUser();
     }
   }
 
+  /**
+   * On Log out, disconnect the client from the server.
+   */
   function logout() {
     disconnectSocket();
   }
 
-  function toggleNewUser() {
-    setNewUser(!newUser);
-  }
-
+  /**
+   * Try to login the user, send the details to the server
+   * and display the server response to the user.
+   */
   function login() {
     var email = document.getElementsByClassName("login__email")[0];
     var password = document.getElementsByClassName("login__password")[0];
@@ -82,6 +112,9 @@ function App() {
     setLoginEmailError('');
     setLoginPasswordError('');
 
+    /**
+     * POST the user request to the API endpoint '/login'.
+     */
     axios.post('http://localhost:8000/api/users/login', {
       email: email.value,
       password: password.value
@@ -114,6 +147,10 @@ function App() {
     });
   }
 
+  /**
+   * Try to register the new user, send the details to the server
+   * and display the server response to the user.
+   */
   function register () {
     var username = document.getElementsByClassName("register__username")[0];
     var email = document.getElementsByClassName("register__email")[0];
@@ -126,6 +163,9 @@ function App() {
     setRegisterPassword2Error('');
     setRegisterSuccess('');
 
+    /**
+     * POST the user request to the API endpoint '/register'.
+     */
     axios.post('http://localhost:8000/api/users/register', {
       name: username.value,
       email: email.value,
@@ -157,16 +197,20 @@ function App() {
     });
   }
 
-  function onClickForgotPassword() {
-    setForgotPassword(true);
-  }
-
+  /**
+   * Try to initiate the reset of the user's password, send
+   * the details to the server and display the server response
+   * to the user.
+   */
   function sendForPasswordReset() {
     var email = document.getElementsByClassName("forgot-password__email")[0];
 
     setForgotPasswordEmailError('');
     setForgotPasswordEmailSuccess('');
 
+    /**
+     * POST the user request to the API endpoint '/forgotpassword'.
+     */
     axios.post('http://localhost:8000/api/users/forgotpassword', {
       email: email.value
     })
