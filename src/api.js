@@ -22,6 +22,7 @@ function connectSocket(setUserAuthenticated) {
   socket.on('disconnect', () => {
     console.log('Disconnected');
     setUserAuthenticated(null);
+    sessionStorage.removeItem("token");
   });
 }
 

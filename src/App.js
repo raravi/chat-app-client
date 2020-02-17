@@ -37,6 +37,10 @@ function App() {
   let [ forgotPassword, setForgotPassword ] = useState(false);
 
   useEffect(() => {
+    sessionStorage.removeItem("token");
+  }, []);
+
+  useEffect(() => {
     addNewMessageToBox(newMessage);
   // eslint-disable-next-line
   }, [newMessage]);
@@ -79,7 +83,7 @@ function App() {
     var input = document.getElementsByClassName("message-new__input")[0];
     if (input.value !== "") {
       addNewMessageToBox({user: {id: userAuthenticated.id, name: userAuthenticated.name}, message: input.value});
-      sendMessage({user: {id: userAuthenticated.id, name: userAuthenticated.name}, message: input.value});
+      sendMessage({token: sessionStorage.getItem("token"), message: input.value});
       input.value = "";
     }
   }
@@ -120,12 +124,13 @@ function App() {
       password: password.value
     })
     .then(function (response) {
+      sessionStorage.setItem("token", response.data.token);
       let tokenDecoded = jwtDecode(response.data.token);
       if(tokenDecoded) {
         setUserAuthenticated({id: tokenDecoded.id, name: tokenDecoded.name});
         connectSocket(setUserAuthenticated);
         subscribeToNewMessages((message) => setNewMessage(message));
-        authenticateUser({id: tokenDecoded.id, name: tokenDecoded.name});
+        authenticateUser({ token: sessionStorage.getItem("token")});
         getOldMessages((messages) => {
           setMessageBoxText(messages.slice());
         });
