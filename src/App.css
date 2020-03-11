@@ -341,8 +341,8 @@ body {
   padding: 12px 45px;
   margin-top: 60px;
   margin-bottom: 20px;
+  border: none;
   border-radius: 25px;
-  border-color: var(--color-blue-dark);
   background-color: var(--color-blue-dark);
   color: var(--color-login);
   cursor: pointer;
