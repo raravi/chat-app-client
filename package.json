@@ -1,9 +1,10 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "chat-app-client",
+  "version": "1.0.0",
   "private": true,
   "description": "A chat app client written in React",
-  "author": "Amith Raravi",
+  "author": "Amith Raravi <amith.raravi@gmail.com>",
+  "homepage": "https://www.amithraravi.com/",
   "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
