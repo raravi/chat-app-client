@@ -2,6 +2,8 @@
 
 A chat app client written in React!
 
+![license](https://img.shields.io/github/license/raravi/chat-app-client)&nbsp;&nbsp;![version](https://img.shields.io/github/package-json/v/raravi/chat-app-client)&nbsp;&nbsp;![dependencies](https://img.shields.io/depfu/raravi/chat-app-client)&nbsp;&nbsp;![last-commit](https://img.shields.io/github/last-commit/raravi/chat-app-client)
+
 This Chat Client has the following functionality:
 1. Register a new user.
 2. Login an existing user.
