@@ -137,14 +137,12 @@ function App() {
       }
     })
     .catch(function (error) {
-      if (error.response) {
-        if (error.response.data) {
-          if (error.response.data.email) {
-            setLoginEmailError(error.response.data.email);
-          }
-          if (error.response.data.password) {
-            setLoginPasswordError(error.response.data.password);
-          }
+      if (error.response && error.response.data) {
+        if (error.response.data.email) {
+          setLoginEmailError(error.response.data.email);
+        }
+        if (error.response.data.password) {
+          setLoginPasswordError(error.response.data.password);
         }
       } else {
         console.log(error);
@@ -181,20 +179,18 @@ function App() {
       setRegisterSuccess(response.data.createduser);
     })
     .catch(function (error) {
-      if (error.response) {
-        if (error.response.data) {
-          if (error.response.data.name) {
-            setRegisterUsernameError(error.response.data.name);
-          }
-          if (error.response.data.email) {
-            setRegisterEmailError(error.response.data.email);
-          }
-          if (error.response.data.password) {
-            setRegisterPasswordError(error.response.data.password);
-          }
-          if (error.response.data.password2) {
-            setRegisterPassword2Error(error.response.data.password2);
-          }
+      if (error.response && error.response.data) {
+        if (error.response.data.name) {
+          setRegisterUsernameError(error.response.data.name);
+        }
+        if (error.response.data.email) {
+          setRegisterEmailError(error.response.data.email);
+        }
+        if (error.response.data.password) {
+          setRegisterPasswordError(error.response.data.password);
+        }
+        if (error.response.data.password2) {
+          setRegisterPassword2Error(error.response.data.password2);
         }
       } else {
         console.log(error);
@@ -224,12 +220,8 @@ function App() {
         setForgotPasswordEmailSuccess(response.data.emailsent);
     })
     .catch(function (error) {
-      if (error.response) {
-        if (error.response.data) {
-          if (error.response.data.email) {
-            setForgotPasswordEmailError(error.response.data.email);
-          }
-        }
+      if (error.response && error.response.data && error.response.data.email) {
+        setForgotPasswordEmailError(error.response.data.email);
       } else {
         console.log(error);
       }

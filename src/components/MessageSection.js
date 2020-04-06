@@ -23,7 +23,7 @@ export const MessageSection = (props) => {
         </div>
       </div>
       <div className="message-new">
-        <input type="text" name="message" className="message-new__input" placeholder="Type here..." onKeyUp={(e) => props.onEnterKeyClicked(e)} />
+        <input type="text" name="message" className="message-new__input" placeholder="Type here..." data-testid="message-input" onKeyUp={(e) => props.onEnterKeyClicked(e)} />
         <button type="button" className="message-new__button" onClick={props.getMessageFromUser}>Submit</button>
       </div>
     </section>

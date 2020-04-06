@@ -15,6 +15,7 @@ export const Header = (props) => {
       <h3 className={props.userAuthenticated
                       ? "header__logout header__logout--loggedin"
                       : "header__logout"}
+          data-testid="logout-button"
           onClick={props.logout}
       >logout</h3>
     </header>
