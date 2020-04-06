@@ -26,3 +26,8 @@ The email sent will have a reset link where the user enters their details (email
 User can read the chat history upon login. They can send & receive messages in realtime with whoever is connected to the server!
 
 Note: I've added elements to the application to experiment with the new trend of [neumorphism](https://uxdesign.cc/neumorphism-in-user-interfaces-b47cef3bf3a6), you can disable it by modifying the `drop-shadow` property for the relevant elements in the DOM!
+
+---
+
+## Testing (Jest & React Testing Library)
+This project has a code coverage of 100% with functional as well as unit tests written with care.

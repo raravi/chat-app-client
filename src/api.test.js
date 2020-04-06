@@ -8,6 +8,9 @@ import {  connectSocket,
 
 jest.mock('socket.io-client');
 
+/**
+ *   Stubs / Mocks.
+ */
 let setUserAuthenticated = () => {},
     message = {
       user: { id: 'dummyid', name: 'dummyname' },
@@ -20,7 +23,9 @@ let setUserAuthenticated = () => {},
       token : 'dummytoken'
     };
 
-
+/**
+ *   Unit tests for api.js
+ */
 describe('api.js: unit tests', () => {
   beforeEach(() => {
     socket = {

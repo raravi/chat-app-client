@@ -15,14 +15,6 @@ import App from './App';
 jest.mock('axios');
 jest.mock('jwt-decode');
 jest.mock('./api');
-// jest.mock('./api', () => ({
-//   connectSocket: jest.fn(() => {}),
-//   disconnectSocket: jest.fn(() => {}),
-//   subscribeToNewMessages: jest.fn(() => {}),
-//   authenticateUser: jest.fn(() => {}),
-//   getOldMessages: jest.fn(() => {}),
-//   sendMessage: jest.fn(() => {})
-// }));
 console.error = jest.fn();
 
 /**
@@ -36,6 +28,9 @@ const mockEvent = () => {
   };
 };
 
+/**
+ *   Stubs / Mocks.
+ */
 let dummyMessage = {
       user: {
         id: 'dummyid',
@@ -454,11 +449,6 @@ describe('onEnterKeyClicked', () => {
   });
 
   it('Enter key is pressed with text', async () => {
-    // let input = {
-    //   value: "Something goes here"
-    // }
-    // let documentGetElementsByClassName = jest.spyOn(document, 'getElementsByClassName');
-    // documentGetElementsByClassName.mockImplementation(() => input);
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
