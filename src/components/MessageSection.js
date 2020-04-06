@@ -6,7 +6,7 @@ import React from 'react';
  */
 export const MessageSection = (props) => {
   return (
-    <section className="message-section">
+    <section className="message-section" data-testid="message-section">
       <div className="messages-box">
         <div className="messages-box__messages">
           {
