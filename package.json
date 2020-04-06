@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
+    "nan": "^2.14.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "codecov": "^3.6.5",
     "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }
