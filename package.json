@@ -23,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage --watchAll --env=jest-environment-jsdom-sixteen",
+    "testwithexit": "react-scripts test --coverage --watchAll --env=jest-environment-jsdom-sixteen --exit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
