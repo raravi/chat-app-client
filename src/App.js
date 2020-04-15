@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   Switch,
   Route,
@@ -18,6 +18,11 @@ import { MessageSection } from './components/MessageSection';
 import { LoginSection } from './components/LoginSection';
 import { RegisterSection } from './components/RegisterSection';
 import { ForgotPassword } from './components/ForgotPassword';
+import {
+  loginReducer,
+  registerReducer,
+  forgotPasswordReducer
+} from './reducers';
 import './App.css';
 
 /**
@@ -29,15 +34,21 @@ function App() {
   let [ messageBoxText, setMessageBoxText ] = useState([]);
   let [ newMessage, setNewMessage ] = useState('');
   let [ userAuthenticated, setUserAuthenticated ] = useState(null);
-  let [ loginEmailError, setLoginEmailError ] = useState('');
-  let [ loginPasswordError, setLoginPasswordError ] = useState('');
-  let [ registerUsernameError, setRegisterUsernameError ] = useState('');
-  let [ registerEmailError, setRegisterEmailError ] = useState('');
-  let [ registerPasswordError, setRegisterPasswordError ] = useState('');
-  let [ registerPassword2Error, setRegisterPassword2Error ] = useState('');
-  let [ registerSuccess, setRegisterSuccess ] = useState('');
-  let [ forgotPasswordEmailError, setForgotPasswordEmailError ] = useState('');
-  let [ forgotPasswordEmailSuccess, setForgotPasswordEmailSuccess ] = useState('');
+  const [loginState, loginDispatch] = useReducer(loginReducer, {
+    emailError: '',
+    passwordError: '',
+  });
+  const [registerState, registerDispatch] = useReducer(registerReducer, {
+    usernameError: '',
+    emailError: '',
+    passwordError: '',
+    password2Error: '',
+    success: '',
+  });
+  const [forgotPasswordState, forgotPasswordDispatch] = useReducer(forgotPasswordReducer, {
+    emailError: '',
+    emailSuccess: '',
+  });
 
   useEffect(() => {
     sessionStorage.removeItem("token");
@@ -106,8 +117,8 @@ function App() {
     var email = document.getElementsByClassName("login__email")[0];
     var password = document.getElementsByClassName("login__password")[0];
 
-    setLoginEmailError('');
-    setLoginPasswordError('');
+    loginDispatch({ type: 'email-error', text: '' });
+    loginDispatch({ type: 'password-error', text: '' });
 
     /**
      * POST the user request to the API endpoint '/login'.
@@ -132,10 +143,10 @@ function App() {
     .catch(function (error) {
       if (error.response && error.response.data) {
         if (error.response.data.email) {
-          setLoginEmailError(error.response.data.email);
+          loginDispatch({ type: 'email-error', text: error.response.data.email });
         }
         if (error.response.data.password) {
-          setLoginPasswordError(error.response.data.password);
+          loginDispatch({ type: 'password-error', text: error.response.data.password });
         }
       } else {
         console.log(error);
@@ -153,11 +164,11 @@ function App() {
     var password = document.getElementsByClassName("register__password")[0];
     var password2 = document.getElementsByClassName("register__password2")[0];
 
-    setRegisterUsernameError('');
-    setRegisterEmailError('');
-    setRegisterPasswordError('');
-    setRegisterPassword2Error('');
-    setRegisterSuccess('');
+    registerDispatch({ type: 'username-error', text: '' });
+    registerDispatch({ type: 'email-error', text: '' });
+    registerDispatch({ type: 'password-error', text: '' });
+    registerDispatch({ type: 'password2-error', text: '' });
+    registerDispatch({ type: 'success', text: '' });
 
     /**
      * POST the user request to the API endpoint '/register'.
@@ -169,21 +180,21 @@ function App() {
       password2: password2.value
     })
     .then(function (response) {
-      setRegisterSuccess(response.data.createduser);
+      registerDispatch({ type: 'success', text: response.data.createduser });
     })
     .catch(function (error) {
       if (error.response && error.response.data) {
         if (error.response.data.name) {
-          setRegisterUsernameError(error.response.data.name);
+          registerDispatch({ type: 'username-error', text: error.response.data.name });
         }
         if (error.response.data.email) {
-          setRegisterEmailError(error.response.data.email);
+          registerDispatch({ type: 'email-error', text: error.response.data.email });
         }
         if (error.response.data.password) {
-          setRegisterPasswordError(error.response.data.password);
+          registerDispatch({ type: 'password-error', text: error.response.data.password });
         }
         if (error.response.data.password2) {
-          setRegisterPassword2Error(error.response.data.password2);
+          registerDispatch({ type: 'password2-error', text: error.response.data.password2 });
         }
       } else {
         console.log(error);
@@ -199,8 +210,8 @@ function App() {
   function sendForPasswordReset() {
     var email = document.getElementsByClassName("forgot-password__email")[0];
 
-    setForgotPasswordEmailError('');
-    setForgotPasswordEmailSuccess('');
+    forgotPasswordDispatch({ type: 'email-error', text: '' });
+    forgotPasswordDispatch({ type: 'email-success', text: '' });
 
     /**
      * POST the user request to the API endpoint '/forgotpassword'.
@@ -210,11 +221,11 @@ function App() {
     })
     .then(function (response) {
       if (response.data.emailsent)
-        setForgotPasswordEmailSuccess(response.data.emailsent);
+        forgotPasswordDispatch({ type: 'email-success', text: response.data.emailsent });
     })
     .catch(function (error) {
       if (error.response && error.response.data && error.response.data.email) {
-        setForgotPasswordEmailError(error.response.data.email);
+        forgotPasswordDispatch({ type: 'email-error', text: error.response.data.email });
       } else {
         console.log(error);
       }
@@ -240,26 +251,20 @@ function App() {
           { userAuthenticated
             ? <Redirect to="/app" />
             : <LoginSection
-                loginEmailError={loginEmailError}
-                loginPasswordError={loginPasswordError}
+                loginState={loginState}
                 login={login}
               />
           }
         </Route>
         <Route path="/register">
           <RegisterSection
-            registerUsernameError={registerUsernameError}
-            registerEmailError={registerEmailError}
-            registerPasswordError={registerPasswordError}
-            registerPassword2Error={registerPassword2Error}
-            registerSuccess={registerSuccess}
+            registerState={registerState}
             register={register}
           />
         </Route>
         <Route path="/forgot-password">
           <ForgotPassword
-            forgotPasswordEmailError={forgotPasswordEmailError}
-            forgotPasswordEmailSuccess={forgotPasswordEmailSuccess}
+            forgotPasswordState={forgotPasswordState}
             sendForPasswordReset={sendForPasswordReset}
           />
         </Route>

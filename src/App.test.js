@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { MemoryRouter } from "react-router-dom";
 import { act, render, cleanup, fireEvent } from '@testing-library/react';
 import ReactTestUtils from 'react-dom/test-utils';
@@ -12,12 +12,22 @@ import {  connectSocket,
           getOldMessages,
           sendMessage } from './api';
 import App from './App';
+import {
+  loginReducer,
+  registerReducer,
+  forgotPasswordReducer } from './reducers';
 
+/**
+ * Mocks of external dependencies
+ */
 jest.mock('axios');
 jest.mock('jwt-decode');
 jest.mock('./api');
 console.error = jest.fn();
 
+/**
+ * Wrapper for Router
+ */
 function renderWithRouter(ui) {
   const Wrapper = ({ children }) => (
     <MemoryRouter>{children}</MemoryRouter>
@@ -242,6 +252,80 @@ describe('Login Page', () => {
     fireEvent.click(getByTestId('login-forgotpassword'));
 
     expect(getByTestId('forgotpassword-button')).toBeInTheDocument();
+  });
+
+  describe('Test the Reducers', () => {
+    let MockLogin;
+    beforeAll(() => {
+      MockLogin = (props) => {
+        const [loginState, loginDispatch] = useReducer(loginReducer, {
+          emailError: '',
+          passwordError: '',
+        });
+        const [registerState, registerDispatch] = useReducer(registerReducer, {
+          usernameError: '',
+          emailError: '',
+          passwordError: '',
+          password2Error: '',
+          success: '',
+        });
+        const [forgotPasswordState, forgotPasswordDispatch] = useReducer(forgotPasswordReducer, {
+          emailError: '',
+          emailSuccess: '',
+        });
+        return (
+          <>
+            <p
+              data-testid="mock-login"
+              onClick={() => loginDispatch({ type: 'dummy', text: "dummy" })}
+            >
+              Login
+            </p>
+            <p
+              data-testid="mock-register"
+              onClick={() => registerDispatch({ type: 'dummy', text: "dummy" })}
+            >
+              Register
+            </p>
+            <p
+              data-testid="mock-forgot-password"
+              onClick={() => forgotPasswordDispatch({ type: 'dummy', text: "dummy" })}
+            >
+              Forgot Password
+            </p>
+          </>
+        )
+      };
+    });
+    it('Login Reducer', () => {
+      const { getByTestId } = render(<MockLogin />);
+
+      try {
+        fireEvent.click(getByTestId('mock-login'));
+      } catch (e) {
+        expect(e.toString()).toBe('Error: Unexpected action');
+      }
+    });
+
+    it('Register Reducer', () => {
+      const { getByTestId } = render(<MockLogin />);
+
+      try {
+        fireEvent.click(getByTestId('mock-register'));
+      } catch (e) {
+        expect(e.toString()).toBe('Error: Unexpected action');
+      }
+    });
+
+    it('Forgot Password Reducer', () => {
+      const { getByTestId } = render(<MockLogin />);
+
+      try {
+        fireEvent.click(getByTestId('mock-forgot-password'));
+      } catch (e) {
+        expect(e.toString()).toBe('Error: Unexpected action');
+      }
+    });
   });
 });
 
