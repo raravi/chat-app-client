@@ -271,6 +271,7 @@ body {
 .login__header,
 .register__header {
   cursor: pointer;
+  text-decoration: none;
 }
 
 .login__header--selected,

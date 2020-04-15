@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom";
 
 /**
  * RegisterSection component
@@ -8,7 +11,11 @@ export const RegisterSection = (props) => {
   return (
     <section className="register">
       <div className="register__header-group">
-        <h2 className="register__header" data-testid="register-login" onClick={props.toggleNewUser}>Login</h2>
+        <Link to="/"
+              className="register__header"
+              data-testid="register-login">
+          Login
+        </Link>
         <h2 className="register__header register__header--selected">Register</h2>
       </div>
       <input type="username" name="username" className="register__username" placeholder="Username" /><br />
