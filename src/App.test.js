@@ -1,4 +1,5 @@
 import React from 'react';
+import { MemoryRouter } from "react-router-dom";
 import { act, render, cleanup, fireEvent } from '@testing-library/react';
 import ReactTestUtils from 'react-dom/test-utils';
 import '@testing-library/jest-dom/extend-expect';
@@ -16,6 +17,15 @@ jest.mock('axios');
 jest.mock('jwt-decode');
 jest.mock('./api');
 console.error = jest.fn();
+
+function renderWithRouter(ui) {
+  const Wrapper = ({ children }) => (
+    <MemoryRouter>{children}</MemoryRouter>
+  );
+  return {
+    ...render(ui, { wrapper: Wrapper })
+  };
+}
 
 /**
  *   A Mock Event.
@@ -81,6 +91,8 @@ afterEach(() => {
   axiosMock.post.mockReset();
 });
 
+afterEach(cleanup);
+
 /**
  * LOGIN page
  */
@@ -113,7 +125,7 @@ describe('Login Page', () => {
   });
 
   it('submit button is present', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
 
     expect(getByTestId('login-button')).toBeInTheDocument();
   });
@@ -129,7 +141,7 @@ describe('Login Page', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
 
@@ -151,7 +163,7 @@ describe('Login Page', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => null);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
 
@@ -171,7 +183,7 @@ describe('Login Page', () => {
   it('login error: no response.data.email', async () => {
     loginData.errorResponse.response.data.password = loginData.passwordError;
     axiosMock.post.mockImplementation(() => Promise.reject(loginData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
 
@@ -183,7 +195,7 @@ describe('Login Page', () => {
   it('login error: no response.data.password', async () => {
     loginData.errorResponse.response.data.email = loginData.emailError;
     axiosMock.post.mockImplementation(() => Promise.reject(loginData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
 
@@ -195,7 +207,7 @@ describe('Login Page', () => {
   it('login error: no error.response.data', () => {
     loginData.errorResponse.response.data = null;
     axiosMock.post.mockImplementation(() => Promise.reject(loginData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
 
@@ -207,7 +219,7 @@ describe('Login Page', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
     const dashboardNoteElement = await findByTestId('message-section');
@@ -217,7 +229,7 @@ describe('Login Page', () => {
   });
 
   it('Register link is clicked', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-register'));
 
@@ -225,7 +237,7 @@ describe('Login Page', () => {
   });
 
   it('Forgot Password is clicked', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-forgotpassword'));
 
@@ -252,7 +264,7 @@ describe('Register Page', () => {
   });
 
   it('submit button is present', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-register'));
 
@@ -261,7 +273,7 @@ describe('Register Page', () => {
 
   it('Register is successful', async () => {
     axiosMock.post.mockResolvedValueOnce(registerData.successResponse);
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-register'));
     expect(getByTestId('register-button')).toBeInTheDocument();
 
@@ -275,7 +287,7 @@ describe('Register Page', () => {
   it('Register error occured: only name error', async () => {
     registerData.errorResponse.response.data.name = registerData.nameError;
     axiosMock.post.mockImplementation(() => Promise.reject(registerData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-register'));
     expect(getByTestId('register-button')).toBeInTheDocument();
 
@@ -291,7 +303,7 @@ describe('Register Page', () => {
     registerData.errorResponse.response.data.password = registerData.passwordError;
     registerData.errorResponse.response.data.password2 = registerData.password2Error;
     axiosMock.post.mockImplementation(() => Promise.reject(registerData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-register'));
     expect(getByTestId('register-button')).toBeInTheDocument();
 
@@ -307,7 +319,7 @@ describe('Register Page', () => {
   it('Register error occured: no error.response.data', async () => {
     registerData.errorResponse.response.data = null;
     axiosMock.post.mockImplementation(() => Promise.reject(registerData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-register'));
     expect(getByTestId('register-button')).toBeInTheDocument();
 
@@ -318,7 +330,7 @@ describe('Register Page', () => {
   });
 
   it('Login link is clicked', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-register'));
     expect(getByTestId('register-button')).toBeInTheDocument();
 
@@ -350,7 +362,7 @@ describe('Forgot Password Page', () => {
   });
 
   it('submit button is present', () => {
-    const { getByTestId } = render(<App />);
+    const { getByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-forgotpassword'));
 
@@ -360,7 +372,7 @@ describe('Forgot Password Page', () => {
   it('Forgot Password is successful', async () => {
     forgotPasswordData.successResponse.data.emailsent = forgotPasswordData.emailSent;
     axiosMock.post.mockResolvedValueOnce(forgotPasswordData.successResponse);
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-forgotpassword'));
     expect(getByTestId('forgotpassword-button')).toBeInTheDocument();
 
@@ -373,7 +385,7 @@ describe('Forgot Password Page', () => {
 
   it('Forgot Password is successful: no response.data.emailsent', async () => {
     axiosMock.post.mockResolvedValueOnce(forgotPasswordData.successResponse);
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-forgotpassword'));
     expect(getByTestId('forgotpassword-button')).toBeInTheDocument();
 
@@ -386,7 +398,7 @@ describe('Forgot Password Page', () => {
   it('Forgot Password error', async () => {
     forgotPasswordData.errorResponse.response.data.email = forgotPasswordData.emailError;
     axiosMock.post.mockImplementation(() => Promise.reject(forgotPasswordData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-forgotpassword'));
     expect(getByTestId('forgotpassword-button')).toBeInTheDocument();
 
@@ -400,7 +412,7 @@ describe('Forgot Password Page', () => {
   it('Forgot Password error: no error.response.data', async () => {
     forgotPasswordData.errorResponse.response.data = null;
     axiosMock.post.mockImplementation(() => Promise.reject(forgotPasswordData.errorResponse));
-    const { getByTestId, findByText } = render(<App />);
+    const { getByTestId, findByText } = renderWithRouter(<App />);
     fireEvent.click(getByTestId('login-forgotpassword'));
     expect(getByTestId('forgotpassword-button')).toBeInTheDocument();
 
@@ -428,7 +440,7 @@ describe('onEnterKeyClicked', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
     const dashboardNoteElement = await findByTestId('message-section');
@@ -440,7 +452,7 @@ describe('onEnterKeyClicked', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
     const dashboardNoteElement = await findByTestId('message-section');
@@ -452,7 +464,7 @@ describe('onEnterKeyClicked', () => {
     loginData.successResponse.data.token = loginData.token;
     axiosMock.post.mockResolvedValueOnce(loginData.successResponse);
     jwtDecodeMock.mockImplementation(() => loginData.tokenDecoded);
-    const { getByTestId, findByTestId } = render(<App />);
+    const { getByTestId, findByTestId } = renderWithRouter(<App />);
 
     fireEvent.click(getByTestId('login-button'));
     const dashboardNoteElement = await findByTestId('message-section');

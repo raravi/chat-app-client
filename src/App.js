@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import {
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import {  connectSocket,
@@ -33,8 +38,6 @@ function App() {
   let [ registerSuccess, setRegisterSuccess ] = useState('');
   let [ forgotPasswordEmailError, setForgotPasswordEmailError ] = useState('');
   let [ forgotPasswordEmailSuccess, setForgotPasswordEmailSuccess ] = useState('');
-  let [ newUser, setNewUser ] = useState(false);
-  let [ forgotPassword, setForgotPassword ] = useState(false);
 
   useEffect(() => {
     sessionStorage.removeItem("token");
@@ -52,16 +55,6 @@ function App() {
     }
   // eslint-disable-next-line
   }, [messageBoxText]);
-
-  /**
-   * These functions toggle/set state variables.
-   */
-  function toggleNewUser() {
-    setNewUser(!newUser);
-  }
-  function onClickForgotPassword() {
-    setForgotPassword(true);
-  }
 
   /**
    * Add New Message (either from the user or someone else) to the Message Box.
@@ -231,41 +224,46 @@ function App() {
   return (
     <div className="container">
       <Header userAuthenticated={userAuthenticated} logout={logout} />
-      { userAuthenticated &&
-        <MessageSection
-          messageBoxText={messageBoxText}
-          userAuthenticated={userAuthenticated}
-          onEnterKeyClicked={onEnterKeyClicked}
-          getMessageFromUser={getMessageFromUser}
-        />
-      }
-      { !userAuthenticated && !forgotPassword && !newUser &&
-        <LoginSection
-          toggleNewUser={toggleNewUser}
-          loginEmailError={loginEmailError}
-          loginPasswordError={loginPasswordError}
-          login={login}
-          onClickForgotPassword={onClickForgotPassword}
-        />
-      }
-      { !userAuthenticated && !forgotPassword && newUser &&
-        <RegisterSection
-          toggleNewUser={toggleNewUser}
-          registerUsernameError={registerUsernameError}
-          registerEmailError={registerEmailError}
-          registerPasswordError={registerPasswordError}
-          registerPassword2Error={registerPassword2Error}
-          registerSuccess={registerSuccess}
-          register={register}
-        />
-      }
-      { !userAuthenticated && forgotPassword &&
-        <ForgotPassword
-          forgotPasswordEmailError={forgotPasswordEmailError}
-          forgotPasswordEmailSuccess={forgotPasswordEmailSuccess}
-          sendForPasswordReset={sendForPasswordReset}
-        />
-      }
+      <Switch>
+        <Route path="/app">
+          { userAuthenticated
+            ? <MessageSection
+                messageBoxText={messageBoxText}
+                userAuthenticated={userAuthenticated}
+                onEnterKeyClicked={onEnterKeyClicked}
+                getMessageFromUser={getMessageFromUser}
+              />
+            : <Redirect to="/" />
+          }
+        </Route>
+        <Route exact path="/">
+          { userAuthenticated
+            ? <Redirect to="/app" />
+            : <LoginSection
+                loginEmailError={loginEmailError}
+                loginPasswordError={loginPasswordError}
+                login={login}
+              />
+          }
+        </Route>
+        <Route path="/register">
+          <RegisterSection
+            registerUsernameError={registerUsernameError}
+            registerEmailError={registerEmailError}
+            registerPasswordError={registerPasswordError}
+            registerPassword2Error={registerPassword2Error}
+            registerSuccess={registerSuccess}
+            register={register}
+          />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPassword
+            forgotPasswordEmailError={forgotPasswordEmailError}
+            forgotPasswordEmailSuccess={forgotPasswordEmailSuccess}
+            sendForPasswordReset={sendForPasswordReset}
+          />
+        </Route>
+      </Switch>
       <Footer />
     </div>
   );
