@@ -117,8 +117,7 @@ function App() {
     var email = document.getElementsByClassName("login__email")[0];
     var password = document.getElementsByClassName("login__password")[0];
 
-    loginDispatch({ type: 'email-error', text: '' });
-    loginDispatch({ type: 'password-error', text: '' });
+    loginDispatch({ type: 'reset-all' });
 
     /**
      * POST the user request to the API endpoint '/login'.
@@ -164,11 +163,7 @@ function App() {
     var password = document.getElementsByClassName("register__password")[0];
     var password2 = document.getElementsByClassName("register__password2")[0];
 
-    registerDispatch({ type: 'username-error', text: '' });
-    registerDispatch({ type: 'email-error', text: '' });
-    registerDispatch({ type: 'password-error', text: '' });
-    registerDispatch({ type: 'password2-error', text: '' });
-    registerDispatch({ type: 'success', text: '' });
+    registerDispatch({ type: 'reset-all' });
 
     /**
      * POST the user request to the API endpoint '/register'.
@@ -210,8 +205,7 @@ function App() {
   function sendForPasswordReset() {
     var email = document.getElementsByClassName("forgot-password__email")[0];
 
-    forgotPasswordDispatch({ type: 'email-error', text: '' });
-    forgotPasswordDispatch({ type: 'email-success', text: '' });
+    forgotPasswordDispatch({ type: 'reset-all' });
 
     /**
      * POST the user request to the API endpoint '/forgotpassword'.
