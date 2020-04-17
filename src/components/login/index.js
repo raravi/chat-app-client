@@ -1,6 +1,6 @@
 import React from 'react';
 import { LoginContextProvider } from './context';
-import { Login } from './Login';
+import { LoginPage } from './LoginPage';
 
 /**
  * Login Component: Can be reused across applications.
@@ -17,12 +17,14 @@ import { Login } from './Login';
  *      }
  *    }
  */
-export const LoginComponent = (props) => {
+const Login = (props) => {
   return (
     <LoginContextProvider>
-      <Login
+      <LoginPage
         loginSuccessCallback={props.loginSuccessCallback}
         apiDetails={props.apiDetails} />
     </LoginContextProvider>
   )
 }
+
+export default Login;

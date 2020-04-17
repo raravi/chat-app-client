@@ -14,7 +14,7 @@ import {  connectSocket,
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
-import { LoginComponent } from './components/login';
+import Login from './components/login';
 import './App.css';
 
 /**
@@ -127,7 +127,7 @@ function App() {
         <Route path="/">
           { userAuthenticated
             ? <Redirect to="/app" />
-            : <LoginComponent
+            : <Login
                 loginSuccessCallback={onSuccessfulLogin}
                 apiDetails={apiDetails} />
           }

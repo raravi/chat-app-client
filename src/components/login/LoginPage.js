@@ -13,7 +13,7 @@ import { useLoginContext } from './context';
  * The Login component.
  * Contains all Login / Register / ForgotPassword logic associated with this app.
  */
-export const Login = (props) => {
+export const LoginPage = (props) => {
   let apiDetails = props.apiDetails;
   let {
     loginDispatch,
@@ -49,7 +49,7 @@ export const Login = (props) => {
           loginDispatch({ type: 'password-error', text: error.response.data.password });
         }
       } else {
-        console.log(error);
+        loginDispatch({ type: 'email-error', text: "Unable to reach server..." });
       }
     });
   }
@@ -93,7 +93,7 @@ export const Login = (props) => {
           registerDispatch({ type: 'password2-error', text: error.response.data.password2 });
         }
       } else {
-        console.log(error);
+        registerDispatch({ type: 'username-error', text: "Unable to reach server..." });
       }
     });
   }
@@ -122,7 +122,7 @@ export const Login = (props) => {
       if (error.response && error.response.data && error.response.data.email) {
         forgotPasswordDispatch({ type: 'email-error', text: error.response.data.email });
       } else {
-        console.log(error);
+        forgotPasswordDispatch({ type: 'email-error', text: "Unable to reach server..." });
       }
     });
   }
