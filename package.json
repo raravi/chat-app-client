@@ -50,5 +50,10 @@
   "devDependencies": {
     "codecov": "^3.6.5",
     "jest-environment-jsdom-sixteen": "^1.0.3"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
