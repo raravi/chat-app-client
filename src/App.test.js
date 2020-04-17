@@ -15,7 +15,7 @@ import App from './App';
 import {
   loginReducer,
   registerReducer,
-  forgotPasswordReducer } from './reducers';
+  forgotPasswordReducer } from './components/login/reducers';
 
 /**
  * Mocks of external dependencies
