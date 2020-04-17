@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import {  connectSocket,
           disconnectSocket,
@@ -15,14 +14,7 @@ import {  connectSocket,
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
-import { LoginSection } from './components/LoginSection';
-import { RegisterSection } from './components/RegisterSection';
-import { ForgotPassword } from './components/ForgotPassword';
-import {
-  loginReducer,
-  registerReducer,
-  forgotPasswordReducer
-} from './reducers';
+import { LoginComponent } from './components/login';
 import './App.css';
 
 /**
@@ -31,24 +23,18 @@ import './App.css';
  * Contains all Business logic associated with this app.
  */
 function App() {
+  const apiDetails = {
+    url: 'http://localhost:8000',
+    endpoints: {
+      login: '/api/users/login',
+      register: '/api/users/register',
+      forgotPassword: '/api/users/forgotpassword'
+    }
+  };
+
   let [ messageBoxText, setMessageBoxText ] = useState([]);
   let [ newMessage, setNewMessage ] = useState('');
   let [ userAuthenticated, setUserAuthenticated ] = useState(null);
-  const [loginState, loginDispatch] = useReducer(loginReducer, {
-    emailError: '',
-    passwordError: '',
-  });
-  const [registerState, registerDispatch] = useReducer(registerReducer, {
-    usernameError: '',
-    emailError: '',
-    passwordError: '',
-    password2Error: '',
-    success: '',
-  });
-  const [forgotPasswordState, forgotPasswordDispatch] = useReducer(forgotPasswordReducer, {
-    emailError: '',
-    emailSuccess: '',
-  });
 
   useEffect(() => {
     sessionStorage.removeItem("token");
@@ -109,121 +95,18 @@ function App() {
     disconnectSocket();
   }
 
-  /**
-   * Try to login the user, send the details to the server
-   * and display the server response to the user.
-   */
-  function login() {
-    var email = document.getElementsByClassName("login__email")[0];
-    var password = document.getElementsByClassName("login__password")[0];
-
-    loginDispatch({ type: 'reset-all' });
-
-    /**
-     * POST the user request to the API endpoint '/login'.
-     */
-    axios.post('http://localhost:8000/api/users/login', {
-      email: email.value,
-      password: password.value
-    })
-    .then(function (response) {
-      sessionStorage.setItem("token", response.data.token);
-      let tokenDecoded = jwtDecode(response.data.token);
-      if(tokenDecoded) {
-        setUserAuthenticated({id: tokenDecoded.id, name: tokenDecoded.name});
-        connectSocket(setUserAuthenticated);
-        subscribeToNewMessages((message) => setNewMessage(message));
-        authenticateUser({ token: sessionStorage.getItem("token")});
-        getOldMessages((messages) => {
-          setMessageBoxText(messages.slice());
-        });
-      }
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data) {
-        if (error.response.data.email) {
-          loginDispatch({ type: 'email-error', text: error.response.data.email });
-        }
-        if (error.response.data.password) {
-          loginDispatch({ type: 'password-error', text: error.response.data.password });
-        }
-      } else {
-        console.log(error);
-      }
-    });
-  }
-
-  /**
-   * Try to register the new user, send the details to the server
-   * and display the server response to the user.
-   */
-  function register () {
-    var username = document.getElementsByClassName("register__username")[0];
-    var email = document.getElementsByClassName("register__email")[0];
-    var password = document.getElementsByClassName("register__password")[0];
-    var password2 = document.getElementsByClassName("register__password2")[0];
-
-    registerDispatch({ type: 'reset-all' });
-
-    /**
-     * POST the user request to the API endpoint '/register'.
-     */
-    axios.post('http://localhost:8000/api/users/register', {
-      name: username.value,
-      email: email.value,
-      password: password.value,
-      password2: password2.value
-    })
-    .then(function (response) {
-      registerDispatch({ type: 'success', text: response.data.createduser });
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data) {
-        if (error.response.data.name) {
-          registerDispatch({ type: 'username-error', text: error.response.data.name });
-        }
-        if (error.response.data.email) {
-          registerDispatch({ type: 'email-error', text: error.response.data.email });
-        }
-        if (error.response.data.password) {
-          registerDispatch({ type: 'password-error', text: error.response.data.password });
-        }
-        if (error.response.data.password2) {
-          registerDispatch({ type: 'password2-error', text: error.response.data.password2 });
-        }
-      } else {
-        console.log(error);
-      }
-    });
-  }
-
-  /**
-   * Try to initiate the reset of the user's password, send
-   * the details to the server and display the server response
-   * to the user.
-   */
-  function sendForPasswordReset() {
-    var email = document.getElementsByClassName("forgot-password__email")[0];
-
-    forgotPasswordDispatch({ type: 'reset-all' });
-
-    /**
-     * POST the user request to the API endpoint '/forgotpassword'.
-     */
-    axios.post('http://localhost:8000/api/users/forgotpassword', {
-      email: email.value
-    })
-    .then(function (response) {
-      if (response.data.emailsent)
-        forgotPasswordDispatch({ type: 'email-success', text: response.data.emailsent });
-    })
-    .catch(function (error) {
-      if (error.response && error.response.data && error.response.data.email) {
-        forgotPasswordDispatch({ type: 'email-error', text: error.response.data.email });
-      } else {
-        console.log(error);
-      }
-    });
+  function onSuccessfulLogin(response) {
+    sessionStorage.setItem("token", response.data.token);
+    let tokenDecoded = jwtDecode(response.data.token);
+    if(tokenDecoded) {
+      setUserAuthenticated({id: tokenDecoded.id, name: tokenDecoded.name});
+      connectSocket(setUserAuthenticated);
+      subscribeToNewMessages((message) => setNewMessage(message));
+      authenticateUser({ token: sessionStorage.getItem("token")});
+      getOldMessages((messages) => {
+        setMessageBoxText(messages.slice());
+      });
+    }
   }
 
   return (
@@ -241,26 +124,13 @@ function App() {
             : <Redirect to="/" />
           }
         </Route>
-        <Route exact path="/">
+        <Route path="/">
           { userAuthenticated
             ? <Redirect to="/app" />
-            : <LoginSection
-                loginState={loginState}
-                login={login}
-              />
+            : <LoginComponent
+                loginSuccessCallback={onSuccessfulLogin}
+                apiDetails={apiDetails} />
           }
-        </Route>
-        <Route path="/register">
-          <RegisterSection
-            registerState={registerState}
-            register={register}
-          />
-        </Route>
-        <Route path="/forgot-password">
-          <ForgotPassword
-            forgotPasswordState={forgotPasswordState}
-            sendForPasswordReset={sendForPasswordReset}
-          />
         </Route>
       </Switch>
       <Footer />
