@@ -9,8 +9,6 @@ import { RegisterSection } from './RegisterSection';
 import { ForgotPassword } from './ForgotPassword';
 import { useLoginContext } from './context';
 
-// axios.defaults.withCredentials = true  // enable axios post cookie, default false
-
 /**
  * The Login component.
  * Contains all Login / Register / ForgotPassword logic associated with this app.
