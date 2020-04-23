@@ -7,6 +7,7 @@ import axios from 'axios';
 import { LoginSection } from './LoginSection';
 import { RegisterSection } from './RegisterSection';
 import { ForgotPassword } from './ForgotPassword';
+import { ResetPassword } from './ResetPassword';
 import { useLoginContext } from './context';
 
 /**
@@ -18,7 +19,8 @@ export const LoginPage = (props) => {
   let {
     loginDispatch,
     registerDispatch,
-    forgotPasswordDispatch } = useLoginContext();
+    forgotPasswordDispatch,
+    resetPasswordDispatch } = useLoginContext();
 
   /**
    * Try to login the user, send the details to the server
@@ -127,6 +129,61 @@ export const LoginPage = (props) => {
     });
   }
 
+  /**
+   * Send the Reset Token to the backend for processing,
+   * along with User details for password reset.
+   */
+  function resetPasswordOfUser() {
+    const resetEmail = document.querySelector('.reset__email');
+    const resetCode = document.querySelector('.reset__code');
+    const resetPassword = document.querySelector('.reset__password');
+    const resetPassword2 = document.querySelector('.reset__password2');
+
+    resetPasswordDispatch({ type: 'reset-all' });
+
+    fetch(apiDetails.url + apiDetails.endpoints.resetPassword, {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: resetEmail.value,
+        resetcode: resetCode.value,
+        password: resetPassword.value,
+        password2: resetPassword2.value
+      })
+    })
+    .then(response => response.json())
+    .then(text => {
+      if (text.email) {
+        resetPasswordDispatch({ type: 'email-error', text: text.email });
+      }
+      if (text.resetcode) {
+        resetPasswordDispatch({ type: 'reset-code-error', text: text.resetcode });
+      }
+      if (text.password) {
+        resetPasswordDispatch({ type: 'password-error', text: text.password });
+      }
+      if (text.password2) {
+        resetPasswordDispatch({ type: 'password2-error', text: text.password2 });
+      }
+      if (text.success) {
+        resetPasswordDispatch({ type: 'success', text: text.success });
+        resetEmail.value = '';
+        resetCode.value = '';
+        resetPassword.value = '';
+        resetPassword2.value = '';
+      }
+    })
+    .catch(e => {
+      resetPasswordDispatch({
+        type: 'email-error',
+        text: "Unable to reach server..."
+      });
+    });
+  }
+
   return (
       <Switch>
         <Route exact path="/">
@@ -137,6 +194,9 @@ export const LoginPage = (props) => {
         </Route>
         <Route path="/forgot-password">
           <ForgotPassword forgotPasswordCallback={forgotPasswordOfUser} />
+        </Route>
+        <Route path="/reset-password">
+          <ResetPassword resetPasswordCallback={resetPasswordOfUser} />
         </Route>
       </Switch>
   );

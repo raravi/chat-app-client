@@ -240,7 +240,8 @@ body {
  */
 .login,
 .register,
-.forgot-password {
+.forgot-password,
+.reset {
   position: relative;
   width: 100%;
   max-width: 350px;
@@ -256,7 +257,8 @@ body {
 
 .login__header,
 .register__header,
-.forgot-password__header {
+.forgot-password__header,
+.reset__header {
   font-family: 'Titillium Web', sans-serif;
   font-size: 28px;
   font-weight: 300;
@@ -281,7 +283,8 @@ body {
   cursor: auto;
 }
 
-.forgot-password__text {
+.forgot-password__text,
+.reset__text {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -295,7 +298,11 @@ body {
 .register__email,
 .register__password,
 .register__password2,
-.forgot-password__email {
+.forgot-password__email,
+.reset__email,
+.reset__code,
+.reset__password,
+.reset__password2 {
   font-size: 16px;
   line-height: 1.75;
   margin-top: 46px;
@@ -313,7 +320,11 @@ body {
 .register__email-error,
 .register__password-error,
 .register__password2-error,
-.forgot-password__email-error {
+.forgot-password__email-error,
+.reset__email-error,
+.reset__code-error,
+.reset__password-error,
+.reset__password2-error {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -323,7 +334,8 @@ body {
 }
 
 .register__success,
-.forgot-password__email-success {
+.forgot-password__email-success,
+.reset__code-success {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -334,7 +346,8 @@ body {
 
 .login__submit,
 .register__submit,
-.forgot-password__submit {
+.forgot-password__submit,
+.reset__submit {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -353,7 +366,8 @@ body {
 
 .login__submit:hover,
 .register__submit:hover,
-.forgot-password__submit:hover {
+.forgot-password__submit:hover,
+.reset__submit:hover {
   transform: translate(-50%, -1%);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15),
               0 4px 8px 0 rgba(0, 0, 0, 0.25);
@@ -583,6 +597,126 @@ body {
 }
 
 .forgot-password__email::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__email::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-grey-lighter);
+}
+
+.reset__email::-moz-placeholder { /* Firefox 19+ */
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-grey-lighter);
+}
+
+.reset__email:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-grey-lighter);
+}
+
+.reset__email::input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-grey-lighter);
+}
+
+.reset__email::placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--color-grey-lighter);
+}
+
+.reset__code::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__code::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__code:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__code::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__code::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password2::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password2::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password2:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password2::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.reset__password2::placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: var(--color-grey-lighter);

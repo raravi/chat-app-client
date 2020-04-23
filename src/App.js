@@ -28,7 +28,8 @@ function App() {
     endpoints: {
       login: '/api/users/login',
       register: '/api/users/register',
-      forgotPassword: '/api/users/forgotpassword'
+      forgotPassword: '/api/users/forgotpassword',
+      resetPassword: '/api/users/resetpassword'
     }
   };
 
