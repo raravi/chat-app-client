@@ -11,7 +11,7 @@ let socket;
  * This function connects to the server upon login.
  */
 function connectSocket(setUserAuthenticated) {
-  socket = io(apiDetails.url', {
+  socket = io(apiDetails.url, {
     reconnection: false
   });
   socket.on('connect', () => {
