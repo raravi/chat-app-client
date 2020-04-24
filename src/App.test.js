@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import { MemoryRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from 'history';
 import { act, render, cleanup, fireEvent } from '@testing-library/react';
 import ReactTestUtils from 'react-dom/test-utils';
 import '@testing-library/jest-dom/extend-expect';
@@ -12,10 +13,12 @@ import {  connectSocket,
           getOldMessages,
           sendMessage } from './api';
 import App from './App';
+import { apiDetails } from './config/apiDetails';
 import {
   loginReducer,
   registerReducer,
-  forgotPasswordReducer } from './components/login/reducers';
+  forgotPasswordReducer,
+  resetPasswordReducer } from './components/login/reducers';
 
 /**
  * Mocks of external dependencies
@@ -28,12 +31,19 @@ console.error = jest.fn();
 /**
  * Wrapper for Router
  */
-function renderWithRouter(ui) {
+function renderWithRouter(
+  ui,
+  {
+    route = '/',
+    history = createMemoryHistory({ initialEntries: [route] }),
+  } = {}
+) {
   const Wrapper = ({ children }) => (
-    <MemoryRouter>{children}</MemoryRouter>
+    <Router history={history}>{children}</Router>
   );
   return {
-    ...render(ui, { wrapper: Wrapper })
+    ...render(ui, { wrapper: Wrapper }),
+    history
   };
 }
 
@@ -66,7 +76,7 @@ let dummyMessage = {
         iat: 1586133254,
         exp: 1617690180
       },
-      url: 'http://localhost:8000/api/users/login',
+      url: apiDetails.url + apiDetails.endpoints.login,
       options: {"email": "", "password": ""},
       successResponse: null,
       emailError: "Email not found",
@@ -75,7 +85,7 @@ let dummyMessage = {
     },
     registerData = {
       createdUser: "New user registered successfully!",
-      url: "http://localhost:8000/api/users/register",
+      url: apiDetails.url + apiDetails.endpoints.register,
       options: {"name": "", "email": "", "password": "", "password2": ""},
       successResponse: {
         data: {
@@ -89,12 +99,31 @@ let dummyMessage = {
       errorResponse: null
     },
     forgotPasswordData = {
-      url: "http://localhost:8000/api/users/forgotpassword",
+      url: apiDetails.url + apiDetails.endpoints.forgotPassword,
       options: {"email": ""},
       emailSent: 'The reset email has been sent, please check your inbox!',
       successResponse: null,
       emailError: "Email not found",
       errorResponse: null
+    },
+    resetPasswordData = {
+      url: apiDetails.url + apiDetails.endpoints.resetPassword,
+      options: {"email": "", "resetcode": "", "password": "", "password2": ""},
+      emailSent: 'The reset email has been sent, please check your inbox!',
+      successResponse: {
+        data: {
+          success: "Password changed successfully!"
+        }
+      },
+      validationResponse: {
+        data: {
+          email: "Email field is required",
+          resetcode: "Reset code is required",
+          password: "Password field is required",
+          password2: "Confirm password field is required",
+        }
+      },
+      errorResponse: { error: "Error!" }
     };
 
 afterEach(() => {
@@ -273,6 +302,13 @@ describe('Login Page', () => {
           emailError: '',
           emailSuccess: '',
         });
+        const [resetPasswordState, resetPasswordDispatch] = useReducer(resetPasswordReducer, {
+          emailError: '',
+          resetCodeError: '',
+          passwordError: '',
+          password2Error: '',
+          success: '',
+        });
         return (
           <>
             <p
@@ -292,6 +328,12 @@ describe('Login Page', () => {
               onClick={() => forgotPasswordDispatch({ type: 'dummy', text: "dummy" })}
             >
               Forgot Password
+            </p>
+            <p
+              data-testid="mock-reset-password"
+              onClick={() => resetPasswordDispatch({ type: 'dummy', text: "dummy" })}
+            >
+              Reset Password
             </p>
           </>
         )
@@ -322,6 +364,16 @@ describe('Login Page', () => {
 
       try {
         fireEvent.click(getByTestId('mock-forgot-password'));
+      } catch (e) {
+        expect(e.toString()).toBe('Error: Unexpected action');
+      }
+    });
+
+    it('Reset Password Reducer', () => {
+      const { getByTestId } = render(<MockLogin />);
+
+      try {
+        fireEvent.click(getByTestId('mock-reset-password'));
       } catch (e) {
         expect(e.toString()).toBe('Error: Unexpected action');
       }
@@ -504,6 +556,57 @@ describe('Forgot Password Page', () => {
 
     expect(axiosMock.post).toHaveBeenCalledTimes(1);
     expect(axiosMock.post).toHaveBeenCalledWith(forgotPasswordData.url, forgotPasswordData.options);
+  });
+});
+
+/**
+ * RESET PASSWORD page
+ */
+describe('Reset Password Page', () => {
+  it('Load RESET PASSWORD', () => {
+    // const history = createMemoryHistory();
+    // const route = '/some-route';
+    const { getByTestId, findByTestId } = renderWithRouter(<App />, {
+      route: '/reset-password',
+    });
+
+    expect(getByTestId('resetpassword-button')).toBeInTheDocument();
+  });
+
+  it('Reset Password is successful', async () => {
+    fetch = jest.fn(() => Promise.resolve({ json: () => resetPasswordData.successResponse.data }));
+    const { getByTestId, findByText } = renderWithRouter(<App />, {
+      route: '/reset-password',
+    });
+
+    fireEvent.click(getByTestId('resetpassword-button'));
+
+    const resetPasswordSuccessElement = await findByText(resetPasswordData.successResponse.data.success);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Reset Password error', async () => {
+    fetch = jest.fn(() => Promise.reject(resetPasswordData.errorResponse));
+    const { getByTestId, findByText } = renderWithRouter(<App />, {
+      route: '/reset-password',
+    });
+
+    fireEvent.click(getByTestId('resetpassword-button'));
+
+    const resetPasswordErrorElement = await findByText("Unable to reach server...");
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Reset Password error: validation errors', async () => {
+    fetch = jest.fn(() => Promise.resolve({ json: () => resetPasswordData.validationResponse.data }));
+    const { getByTestId, findByText } = renderWithRouter(<App />, {
+      route: '/reset-password',
+    });
+
+    fireEvent.click(getByTestId('resetpassword-button'));
+
+    const resetPasswordErrorElement = await findByText(resetPasswordData.validationResponse.data.email);
+    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
 

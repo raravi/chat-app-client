@@ -15,6 +15,7 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
 import Login from './components/login';
+import { apiDetails } from './config/apiDetails';
 import './App.css';
 
 /**
@@ -23,16 +24,6 @@ import './App.css';
  * Contains all Business logic associated with this app.
  */
 function App() {
-  const apiDetails = {
-    url: 'http://localhost:8000',
-    endpoints: {
-      login: '/api/users/login',
-      register: '/api/users/register',
-      forgotPassword: '/api/users/forgotpassword',
-      resetPassword: '/api/users/resetpassword'
-    }
-  };
-
   let [ messageBoxText, setMessageBoxText ] = useState([]);
   let [ newMessage, setNewMessage ] = useState('');
   let [ userAuthenticated, setUserAuthenticated ] = useState(null);
