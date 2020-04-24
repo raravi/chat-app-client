@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { apiDetails } from './config/apiDetails';
 
 /**
  * This file contains the functions needed to connect to
@@ -10,7 +11,7 @@ let socket;
  * This function connects to the server upon login.
  */
 function connectSocket(setUserAuthenticated) {
-  socket = io('http://192.168.1.99:8000', {
+  socket = io(apiDetails.url', {
     reconnection: false
   });
   socket.on('connect', () => {
