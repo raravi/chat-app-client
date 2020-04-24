@@ -1,4 +1,5 @@
 import ioMock from 'socket.io-client';
+import { apiDetails } from './config/apiDetails';
 import {  connectSocket,
           disconnectSocket,
           subscribeToNewMessages,
@@ -43,7 +44,7 @@ describe('api.js: unit tests', () => {
   it('connectSocket', async () => {
     await connectSocket(setUserAuthenticated);
     expect(ioMock).toHaveBeenCalledTimes(1);
-    expect(ioMock).toHaveBeenCalledWith('http://192.168.1.99:8000', {
+    expect(ioMock).toHaveBeenCalledWith(apiDetails.url, {
       reconnection: false
     });
     expect(socket.on.mock.calls[0][0]).toBe('connect');
