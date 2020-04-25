@@ -15,7 +15,7 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
 import Login from './components/login';
-import { apiDetails } from './config/apiDetails';
+import { loginApiDetails } from './config/apiDetails';
 import './App.css';
 
 /**
@@ -121,7 +121,7 @@ function App() {
             ? <Redirect to="/app" />
             : <Login
                 loginSuccessCallback={onSuccessfulLogin}
-                apiDetails={apiDetails} />
+                apiDetails={loginApiDetails} />
           }
         </Route>
       </Switch>

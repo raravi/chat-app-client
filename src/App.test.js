@@ -13,7 +13,7 @@ import {  connectSocket,
           getOldMessages,
           sendMessage } from './api';
 import App from './App';
-import { apiDetails } from './config/apiDetails';
+import { loginApiDetails } from './config/apiDetails';
 import {
   loginReducer,
   registerReducer,
@@ -76,7 +76,7 @@ let dummyMessage = {
         iat: 1586133254,
         exp: 1617690180
       },
-      url: apiDetails.url + apiDetails.endpoints.login,
+      url: loginApiDetails.url + loginApiDetails.endpoints.login,
       options: {"email": "", "password": ""},
       successResponse: null,
       emailError: "Email not found",
@@ -85,7 +85,7 @@ let dummyMessage = {
     },
     registerData = {
       createdUser: "New user registered successfully!",
-      url: apiDetails.url + apiDetails.endpoints.register,
+      url: loginApiDetails.url + loginApiDetails.endpoints.register,
       options: {"name": "", "email": "", "password": "", "password2": ""},
       successResponse: {
         data: {
@@ -99,7 +99,7 @@ let dummyMessage = {
       errorResponse: null
     },
     forgotPasswordData = {
-      url: apiDetails.url + apiDetails.endpoints.forgotPassword,
+      url: loginApiDetails.url + loginApiDetails.endpoints.forgotPassword,
       options: {"email": ""},
       emailSent: 'The reset email has been sent, please check your inbox!',
       successResponse: null,
@@ -107,7 +107,7 @@ let dummyMessage = {
       errorResponse: null
     },
     resetPasswordData = {
-      url: apiDetails.url + apiDetails.endpoints.resetPassword,
+      url: loginApiDetails.url + loginApiDetails.endpoints.resetPassword,
       options: {"email": "", "resetcode": "", "password": "", "password2": ""},
       emailSent: 'The reset email has been sent, please check your inbox!',
       successResponse: {

@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { apiDetails } from './config/apiDetails';
+import { appApiDetails } from './config/apiDetails';
 
 /**
  * This file contains the functions needed to connect to
@@ -11,7 +11,7 @@ let socket;
  * This function connects to the server upon login.
  */
 function connectSocket(setUserAuthenticated) {
-  socket = io(apiDetails.url, {
+  socket = io(appApiDetails.url, {
     reconnection: false
   });
   socket.on('connect', () => {
