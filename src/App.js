@@ -14,7 +14,7 @@ import {  connectSocket,
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MessageSection } from './components/MessageSection';
-import Login from './components/login';
+import Login from '@bit/raravi.react.login';
 import { loginApiDetails } from './config/apiDetails';
 import './App.css';
 

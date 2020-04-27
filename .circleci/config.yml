@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: npm config set @bit:registry https://node.bit.dev
             - run: npm install
             - run: npm run testwithexit
             - run: ./node_modules/.bin/codecov
