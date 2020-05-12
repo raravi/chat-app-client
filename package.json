@@ -1,13 +1,13 @@
 {
   "name": "chat-app-client",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "description": "A chat app client written in React",
   "author": "Amith Raravi <amith.raravi@gmail.com>",
   "homepage": "https://www.amithraravi.com/",
   "license": "MIT",
   "dependencies": {
-    "@bit/raravi.react.login": "^1.4.2",
+    "@bit/raravi.react.login": "^1.6.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.3",
     "@testing-library/user-event": "^10.1.0",

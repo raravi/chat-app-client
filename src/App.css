@@ -240,6 +240,7 @@ body {
  */
 .login,
 .register,
+.validate,
 .forgot-password,
 .reset {
   position: relative;
@@ -257,6 +258,7 @@ body {
 
 .login__header,
 .register__header,
+.validate__header,
 .forgot-password__header,
 .reset__header {
   font-family: 'Titillium Web', sans-serif;
@@ -283,6 +285,7 @@ body {
   cursor: auto;
 }
 
+.validate__text,
 .forgot-password__text,
 .reset__text {
   font-family: 'Titillium Web', sans-serif;
@@ -298,6 +301,7 @@ body {
 .register__email,
 .register__password,
 .register__password2,
+.validate__code,
 .forgot-password__email,
 .reset__email,
 .reset__code,
@@ -320,6 +324,7 @@ body {
 .register__email-error,
 .register__password-error,
 .register__password2-error,
+.validate__code-error,
 .forgot-password__email-error,
 .reset__email-error,
 .reset__code-error,
@@ -334,6 +339,7 @@ body {
 }
 
 .register__success,
+.validate__code-success,
 .forgot-password__email-success,
 .reset__code-success {
   font-size: 16px;
@@ -346,6 +352,7 @@ body {
 
 .login__submit,
 .register__submit,
+.validate__submit,
 .forgot-password__submit,
 .reset__submit {
   position: relative;
@@ -366,6 +373,7 @@ body {
 
 .login__submit:hover,
 .register__submit:hover,
+.validate__submit:hover,
 .forgot-password__submit:hover,
 .reset__submit:hover {
   transform: translate(-50%, -1%);
@@ -567,6 +575,36 @@ body {
 }
 
 .register__password2::placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.validate__code::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.validate__code::-moz-placeholder { /* Firefox 19+ */
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.validate__code:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.validate__code::input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+	color: var(--color-grey-lighter);
+}
+
+.validate__code::placeholder {
 	font-style: italic;
 	font-weight: 300;
 	color: var(--color-grey-lighter);
