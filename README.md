@@ -2,7 +2,7 @@
 
 A chat app client written in React!
 
-![license](https://img.shields.io/github/license/raravi/chat-app-client)&nbsp;&nbsp;![version](https://img.shields.io/github/package-json/v/raravi/chat-app-client)&nbsp;&nbsp;![coverage](https://img.shields.io/codecov/c/gh/raravi/chat-app-client)&nbsp;&nbsp;![dependencies](https://img.shields.io/depfu/raravi/chat-app-client)&nbsp;&nbsp;![last-commit](https://img.shields.io/github/last-commit/raravi/chat-app-client)
+![license](https://img.shields.io/github/license/raravi/chat-app-client)&nbsp;&nbsp;![version](https://img.shields.io/github/package-json/v/raravi/chat-app-client)&nbsp;&nbsp;![coverage](https://img.shields.io/codecov/c/gh/raravi/chat-app-client)&nbsp;&nbsp;![dependencies](https://img.shields.io/depfu/raravi/chat-app-client)&nbsp;&nbsp;![last-commit](https://img.shields.io/github/last-commit/raravi/chat-app-client)[![Netlify Status](https://api.netlify.com/api/v1/badges/e5601703-91da-4653-9d4a-ce47971739fd/deploy-status)](https://app.netlify.com/sites/chat-raravi/deploys)
 
 This Chat Client has the following functionality:
 1. Register a new user.
