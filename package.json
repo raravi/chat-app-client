@@ -8,9 +8,9 @@
   "license": "MIT",
   "dependencies": {
     "@bit/raravi.react.login": "^1.6.0",
-    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/jest-dom": "^5.10.1",
     "@testing-library/react": "^10.2.1",
-    "@testing-library/user-event": "^11.2.1",
+    "@testing-library/user-event": "^11.4.2",
     "axios": "^0.19.2",
     "jwt-decode": "^2.2.0",
     "moment": "^2.26.0",
