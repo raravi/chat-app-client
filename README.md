@@ -31,3 +31,5 @@ Note: I've added elements to the application to experiment with the new trend of
 
 ## Testing (Jest & React Testing Library)
 This project has a code coverage of 100% with functional as well as unit tests written with care.
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y21VCIL)
