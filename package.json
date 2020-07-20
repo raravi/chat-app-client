@@ -49,7 +49,7 @@
     ]
   },
   "devDependencies": {
-    "codecov": "^3.7.0",
+    "codecov": "^3.7.1",
     "jest-environment-jsdom-sixteen": "^1.0.3"
   },
   "bit": {
