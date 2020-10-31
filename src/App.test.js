@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-native-reassign */
+/* eslint-disable no-unused-vars */
 import React, { useReducer } from 'react';
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from 'history';
