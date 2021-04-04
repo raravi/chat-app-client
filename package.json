@@ -7,7 +7,7 @@
   "homepage": "https://www.amithraravi.com/",
   "license": "MIT",
   "dependencies": {
-    "@bit/raravi.react.login": "1.6.6",
+    "@bit/raravi.react.login": "1.6.7",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^13.1.1",
