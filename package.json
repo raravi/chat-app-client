@@ -7,18 +7,18 @@
   "homepage": "https://www.amithraravi.com/",
   "license": "MIT",
   "dependencies": {
-    "@bit/raravi.react.login": "^1.6.5",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.7.1",
+    "@bit/raravi.react.login": "1.6.5",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.1",
     "axios": "^0.21.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.2",
-    "socket.io-client": "^3.1.1"
+    "react-scripts": "^4.0.3",
+    "socket.io-client": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
