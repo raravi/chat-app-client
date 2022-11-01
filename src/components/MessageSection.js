@@ -11,7 +11,7 @@ export const MessageSection = (props) => {
         <div className="messages-box__messages">
           {
             props.messageBoxText.map(message =>
-                <div className={message.user.id === props.userAuthenticated.id
+                <div key={message.date} className={message.user.id === props.userAuthenticated.id
                                   ? "messages-box__message-box messages-box__message-box--me"
                                   : "messages-box__message-box"}
                 >
